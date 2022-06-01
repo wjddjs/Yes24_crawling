@@ -30,3 +30,27 @@ f.write(f'{book_info} \n' )
 f.close()
 
 #학생1의 역할
+
+#학생2 시작
+import requests
+from bs4 import BeautifulSoup
+f = open("./2조_손서현_출력결과.txt", 'w')
+
+url = "http://www.yes24.com/24/category/bestseller"
+html = requests.get(url).text
+
+soup = BeautifulSoup(html, "html.parser")
+books = soup.select("ol > li")
+
+book1_info = []
+for book1 in books:
+    book1_name = book1.select("p > a")[2].text
+    book1_price = book1.select("p.price > strong")[0].text
+    book1_au = book1.select("p.aupu > a")[0].text
+    book1_pu = book1.select("p.aupu > a")[1].text
+    
+    book1_info.append([book1_name, book1_price, book1_au, book1_pu])
+
+print(book1_info)
+f.write(f'{book1_info} \n' )
+f.close()
